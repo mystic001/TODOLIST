@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TodoList App</string>
+    <string name="hint">"Title "</string>
+    <string name="set_date">SET DATE</string>
+    <string name="_project">Create Project</string>
+    <string name="date_picker_title">Would you like to set date</string>
+    <string name="title">title</string>
+    <string name="supposed_date">Supposed Date</string>
+    <string name="checkbox">CheckBox</string>
+    <string name="set_time">Set Time</string>
+    <string name="add_to_todos">Add To TODOS</string>
+</resources>
