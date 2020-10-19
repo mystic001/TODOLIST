@@ -3,18 +3,16 @@ package com.mystic.todolistapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-
 
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -80,8 +78,11 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
     @Override
     public void dateListener(int year, int month, int day) {
+
+        SimpleDateFormat formattedDate = new SimpleDateFormat("dd-MMM-yyyy");
         Date date = new GregorianCalendar(year, month, day).getTime();
-        mtask.setDate(date);
+        String dateFormatted = formattedDate.format(date);
+        mtask.setDate(dateFormatted);
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.Date;
 public class Task {
 
     private String title;
-    private Date date ;
+    private String date ;
     private Time time;
     private boolean done;
 
@@ -23,11 +23,11 @@ public class Task {
         this.title = title;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
