@@ -12,7 +12,7 @@ public class Task {
     private boolean done;
 
     public Task() {
-        this.done = true;
+        this.done = false;
     }
 
     public String getTitle() {
