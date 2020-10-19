@@ -9,4 +9,5 @@
     <string name="checkbox">CheckBox</string>
     <string name="set_time">Set Time</string>
     <string name="add_to_todos">Add To TODOS</string>
+    <string name="to_delete">To delete</string>
 </resources>

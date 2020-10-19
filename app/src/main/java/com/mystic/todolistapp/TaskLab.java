@@ -22,6 +22,11 @@ public class TaskLab {
         mListTask.add(task);
     }
 
+    public void removeTask(int position){
+        mListTask.remove(position);
+    }
+
+
     public List<Task> getTasks(){
         return mListTask;
     }
