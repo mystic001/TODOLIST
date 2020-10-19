@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
     private List<Task> mTask;
     private Context context ;
+    private TaskAdapterListener listener ;
 
     public TaskAdapter(List<Task> mTask,  Context context) {
         this.mTask = mTask;
@@ -33,7 +35,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
 
     @Override
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
-        Task mBindTask = mTask.get(position);
+        final Task mBindTask = mTask.get(position);
         holder.spectitle.setText(mBindTask.getTitle());
         if(mBindTask.getDate() != null){
             holder.dateStr.setText(mBindTask.getDate().toString());
@@ -52,16 +54,23 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
             }
         });
 
+
     }
 
     @Override
     public int getItemCount() {
         return mTask.size();
     }
+//Custom listener that makes the adapter listen to clicks
+    public void setListenerForAdapter(TaskAdapterListener listener){
+        this.listener = listener;
+    }
+
 
     public class TaskHolder extends RecyclerView.ViewHolder {
         CardView cardView ;
         TextView spectitle ,dateStr;
+        ImageView imageView;
         CheckBox box;
         public TaskHolder(View itemview) {
             super(itemview);
@@ -69,10 +78,28 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
             spectitle = itemview.findViewById(R.id.realtitle);
             dateStr = itemview.findViewById(R.id.date_str);
             box = itemview.findViewById(R.id.checkBox);
+            imageView = itemview.findViewById(R.id.imageView);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onClickdelete(position);
+                        }
+                    }
+                }
+            });
 
         }
 
 
+    }
+
+
+    public interface  TaskAdapterListener{
+        void onClickdelete(int position);
     }
 
 

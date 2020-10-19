@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,7 +29,7 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateInterface();
+        mAdapter.notifyDataSetChanged();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +37,14 @@ public class TaskListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_list);
 
         btn_float = findViewById(R.id.floatingActionButton);
-        mListOfTasks = new ArrayList<>();
-
         mCrimeRecyclerView = findViewById(R.id.cyclerview);
-        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        mListOfTasks = new ArrayList<>();
+        mListOfTasks = TaskLab.get().getTasks();
+        mAdapter = new TaskAdapter(mListOfTasks,this);
+
+        mCrimeRecyclerView.setAdapter(mAdapter);
+        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btn_float.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,16 +54,20 @@ public class TaskListActivity extends AppCompatActivity {
             }
         });
 
+        removalListener();
     }
 
-    private void updateInterface() {
-        mListOfTasks = TaskLab.get().getTasks();
-        if( mAdapter == null){
-            mAdapter = new TaskAdapter(mListOfTasks,this);
-            mCrimeRecyclerView.setAdapter(mAdapter);
-        }else {
-            mAdapter.notifyDataSetChanged();
-        }
+
+    //This deletes the item from d list of tasks
+    public void removalListener(){
+        mAdapter.setListenerForAdapter(new TaskAdapter.TaskAdapterListener() {
+            @Override
+            public void onClickdelete(int position) {
+                TaskLab.get().removeTask(position);
+                mAdapter.notifyItemRemoved(position);
+            }
+        });
 
     }
+
 }
