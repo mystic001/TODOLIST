@@ -2,6 +2,7 @@ package com.mystic.todolistapp;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 
@@ -17,8 +18,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class CreateTaskActivity extends AppCompatActivity implements DatePickerDialog.DateListesener {
+public class CreateTaskActivity extends AppCompatActivity implements DatePickerDialog.DateListesener, View.OnClickListener {
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_TIME = "DialogTime" ;
     private TextInputEditText mTitleField;
     private Button setTime ;
     private Button btnAdd ;
@@ -55,43 +57,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
-        btn_setDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager manager = getSupportFragmentManager();
-                DatePickerDialog dialog = new DatePickerDialog();
-                dialog.show(manager,DIALOG_DATE);
-            };
-        });
-
-
-        btn_setDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager manager = getSupportFragmentManager();
-                DatePickerDialog dialog = new DatePickerDialog();
-                dialog.show(manager,DIALOG_DATE);
-
-            };
-        });
-
-    setTime.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        FragmentManager manager = getSupportFragmentManager();
-        TimePickerDialog dialog = new TimePickerDialog();
-        dialog.show(manager,DIALOG_DATE);
-        }
-    });
-
-
-    btnAdd.setOnClickListener(new View.OnClickListener() {
-     @Override
-     public void onClick(View view) {
-         addToDo();
-     }
-
- });
+        responder();
 
     }
 
@@ -101,12 +67,15 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         if( (mTitleField.getText().toString().equals(""))){
             return ;
         }
-        //Task task = new Task();
-        //task.setTitle(mTitleField.getText().toString());
-       // TaskLab.get().addTask(task);
         mtask.setTitle(mTitleField.getText().toString());
         TaskLab.get().addTask(mtask);
         finish();
+    }
+
+    public void responder(){
+        btn_setDate.setOnClickListener(this);
+        setTime.setOnClickListener(this);
+        btnAdd.setOnClickListener(this);
     }
 
     @Override
@@ -114,4 +83,28 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         Date date = new GregorianCalendar(year, month, day).getTime();
         mtask.setDate(date);
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.timeseter:
+                TimePickerDialog dialog = new TimePickerDialog();
+                showPopUp(dialog,DIALOG_TIME);
+                break;
+            case R.id.btn_date:
+                DatePickerDialog dialog_date = new DatePickerDialog();
+                showPopUp(dialog_date,DIALOG_DATE);
+                break;
+            case R.id.btn_add:
+                addToDo();
+                break;
+            default:
+                return ;
+        }
+    }
+//This method triggers the dialog for both date and time;
+    private void showPopUp(DialogFragment frag, String str) {
+        frag.show(getSupportFragmentManager(),str);
+    }
+
 }
