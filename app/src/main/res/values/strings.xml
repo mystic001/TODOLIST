@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TodoList App</string>
+    <string name="app_name">TodoList</string>
     <string name="hint">"Title "</string>
     <string name="set_date">SET DATE</string>
     <string name="_project">Create Project</string>
