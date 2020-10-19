@@ -43,7 +43,6 @@ public class DatePickerDialog extends DialogFragment {
                         int month = mDatePicker.getMonth();
                         int day = mDatePicker.getDayOfMonth();
                         listesener.dateListener(year,month,day);
-                        Toast.makeText(getActivity(),"didnt get it"+month,Toast.LENGTH_LONG).show();
                     }
                 })
                 .create();
