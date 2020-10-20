@@ -20,7 +20,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     private static final String DIALOG_DATE = "DialogDate";
     private static final String DIALOG_TIME = "DialogTime" ;
     private TextInputEditText mTitleField;
-    private Button setTime ;
+    private Button setTime;
     private Button btnAdd ;
     private Button btn_setDate;
     private Task mtask = new Task();

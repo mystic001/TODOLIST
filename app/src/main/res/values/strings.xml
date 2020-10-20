@@ -2,7 +2,7 @@
     <string name="app_name">TodoList</string>
     <string name="hint">"Title "</string>
     <string name="set_date">SET DATE</string>
-    <string name="_project">Create Project</string>
+    <string name="_project">Add new Task</string>
     <string name="date_picker_title">Would you like to set date</string>
     <string name="title">title</string>
     <string name="supposed_date">Supposed Date</string>
@@ -10,4 +10,5 @@
     <string name="set_time">Set Time</string>
     <string name="add_to_todos">Add To TODOS</string>
     <string name="to_delete">To delete</string>
+    <string name="empty">Your To do list is empty\n Click on the icon below to add new to do</string>
 </resources>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +25,7 @@ public class TaskListActivity extends AppCompatActivity {
     private List<Task> mListOfTasks;
     private TaskAdapter mAdapter;
     private FloatingActionButton btn_float;
+    private TextView empty_TV ;
 
 
     @Override
@@ -35,10 +37,7 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
-
-        btn_float = findViewById(R.id.floatingActionButton);
-        mCrimeRecyclerView = findViewById(R.id.cyclerview);
-
+        defineViews();
         mListOfTasks = new ArrayList<>();
         mListOfTasks = TaskLab.get().getTasks();
         mAdapter = new TaskAdapter(mListOfTasks,this);
@@ -46,6 +45,7 @@ public class TaskListActivity extends AppCompatActivity {
         mCrimeRecyclerView.setAdapter(mAdapter);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        setEmptyText();
         btn_float.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +55,20 @@ public class TaskListActivity extends AppCompatActivity {
         });
 
         removalListener();
+    }
+
+    private void defineViews() {
+        btn_float = findViewById(R.id.floatingActionButton);
+        mCrimeRecyclerView = findViewById(R.id.cyclerview);
+        empty_TV = findViewById(R.id.empty_TV);
+    }
+
+    private void setEmptyText() {
+        if(mAdapter.getItemCount() > 0){
+            empty_TV.setVisibility(View.GONE);
+        }else{
+            empty_TV.setVisibility(View.VISIBLE);
+        }
     }
 
 
