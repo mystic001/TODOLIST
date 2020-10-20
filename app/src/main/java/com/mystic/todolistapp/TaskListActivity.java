@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setEmptyText();
         mAdapter.notifyDataSetChanged();
     }
     @Override
@@ -44,8 +46,7 @@ public class TaskListActivity extends AppCompatActivity {
 
         mCrimeRecyclerView.setAdapter(mAdapter);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        setEmptyText();
+        Log.d("TaskListActivity",""+mAdapter.getItemCount());
         btn_float.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +66,7 @@ public class TaskListActivity extends AppCompatActivity {
 
     private void setEmptyText() {
         if(mAdapter.getItemCount() > 0){
+            Log.d("TaskListActivity",""+mAdapter.getItemCount());
             empty_TV.setVisibility(View.GONE);
         }else{
             empty_TV.setVisibility(View.VISIBLE);
@@ -79,6 +81,7 @@ public class TaskListActivity extends AppCompatActivity {
             public void onClickdelete(int position) {
                 TaskLab.get().removeTask(position);
                 mAdapter.notifyItemRemoved(position);
+                setEmptyText();
             }
         });
 
