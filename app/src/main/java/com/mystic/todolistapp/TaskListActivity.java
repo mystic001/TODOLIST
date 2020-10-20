@@ -27,6 +27,7 @@ public class TaskListActivity extends AppCompatActivity {
     private TaskAdapter mAdapter;
     private FloatingActionButton btn_float;
     private TextView empty_TV ;
+    private TextView textView;
 
 
     @Override
@@ -50,18 +51,30 @@ public class TaskListActivity extends AppCompatActivity {
         btn_float.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
-                startActivity(intent);
+                startAnother();
+            }
+        });
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startAnother();
             }
         });
 
         removalListener();
     }
 
+    private void startAnother() {
+        Intent intent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
+        startActivity(intent);
+    }
+
     private void defineViews() {
         btn_float = findViewById(R.id.floatingActionButton);
         mCrimeRecyclerView = findViewById(R.id.cyclerview);
         empty_TV = findViewById(R.id.empty_TV);
+        textView = findViewById(R.id.textView);
     }
 
     private void setEmptyText() {
