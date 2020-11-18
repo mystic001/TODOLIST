@@ -45,6 +45,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         if (holder.box.isChecked()) {
             mBindTask.setChecked(true);
 
+
         }
 
         holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
