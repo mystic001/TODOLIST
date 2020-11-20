@@ -1,6 +1,9 @@
 package com.mystic.todolistapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +43,14 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+        TaskViewModel model = new ViewModelProvider(this).get(TaskViewModel.class);
+        model.getUsers().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                Toast.makeText(TaskListActivity.this, "onchanged",Toast.LENGTH_LONG).show();
+                //Update recyclerView;
+            }
+        });
         defineViews();
         mListOfTasks = new ArrayList<>();
         mListOfTasks = TaskLab.get().getTasks();
