@@ -1,4 +1,6 @@
 package com.mystic.todolistapp;
+import android.app.Application;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -12,18 +14,13 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class TaskLab {
-    private static TaskLab sTaskLab;
     private List<Task> mListTask;
+    private TaskDao taskDao;
 
-    private TaskLab() {
+    public TaskLab(Application application) {
+        TaskDatabase database = TaskDatabase.getTaskDatabaseInstance(application);
+        taskDao = database.taskDao();
         mListTask = new ArrayList<>();
-    }
-
-    public static synchronized TaskLab getInstance() {
-        if (sTaskLab == null) {
-            sTaskLab = new TaskLab();
-        }
-        return sTaskLab;
     }
 
 
@@ -41,7 +38,6 @@ public class TaskLab {
                 .subscribe(new SingleObserver<List<Task>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
                     }
 
                     @Override
@@ -60,9 +56,8 @@ public class TaskLab {
     public Single<List<Task>> fetchTasks(){
         return Single.fromCallable(new Callable<List<Task>>() {
             @Override
-            public List<Task> call() throws Exception {
-              List<Task> taskbucket = new ArrayList<>();
-              return  taskbucket;
+            public List<Task> call() {
+              return  taskDao.getAllTasks().getValue();
             }
         });
 

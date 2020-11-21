@@ -102,7 +102,7 @@ public class TaskListActivity extends AppCompatActivity {
         mAdapter.setListenerForAdapter(new TaskAdapter.TaskAdapterListener() {
             @Override
             public void onClickdelete(int position) {
-                TaskLab.getInstance().removeTask(position);
+                new TaskLab(getApplication()).removeTask(position);
                 mAdapter.notifyItemRemoved(position);
                 setEmptyText();
             }

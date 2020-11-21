@@ -2,17 +2,24 @@ package com.mystic.todolistapp;
 
 import android.text.format.Time;
 
-import java.util.Date;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import java.util.UUID;
+
+@Entity(tableName = "Task_table")
 public class Task {
+
+    @PrimaryKey
+    private UUID uuid;
 
     private String title;
     private String date ;
-    private Time time;
     private boolean done;
 
     public Task() {
         this.done = false;
+        uuid = UUID.randomUUID();
     }
 
     public String getTitle() {
