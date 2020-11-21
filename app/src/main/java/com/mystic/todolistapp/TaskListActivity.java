@@ -26,7 +26,6 @@ public class TaskListActivity extends AppCompatActivity {
 
 
     private RecyclerView mCrimeRecyclerView;
-    private List<Task> mListOfTasks;
     private TaskAdapter mAdapter;
     private FloatingActionButton btn_float;
     private TextView empty_TV ;
@@ -44,16 +43,16 @@ public class TaskListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
         TaskViewModel model = new ViewModelProvider(this).get(TaskViewModel.class);
-        model.getUsers().observe(this, new Observer<List<Task>>() {
+        model.getLiveTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                Toast.makeText(TaskListActivity.this, "onchanged",Toast.LENGTH_LONG).show();
-                //Update recyclerView;
+                mAdapter.notifyDataSetChanged();
             }
         });
         defineViews();
-        mListOfTasks = new ArrayList<>();
-        mListOfTasks = TaskLab.get().getTasks();
+        List<Task> mListOfTasks ;
+        //Gets access to the livedata and convert it to Listof data using getValue method;
+        mListOfTasks = model.getLiveTasks().getValue();
         mAdapter = new TaskAdapter(mListOfTasks,this);
 
         mCrimeRecyclerView.setAdapter(mAdapter);
@@ -103,7 +102,7 @@ public class TaskListActivity extends AppCompatActivity {
         mAdapter.setListenerForAdapter(new TaskAdapter.TaskAdapterListener() {
             @Override
             public void onClickdelete(int position) {
-                TaskLab.get().removeTask(position);
+                TaskLab.getInstance().removeTask(position);
                 mAdapter.notifyItemRemoved(position);
                 setEmptyText();
             }
