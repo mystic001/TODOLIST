@@ -33,12 +33,13 @@ public class TaskListActivity extends AppCompatActivity {
     private TaskViewModel model;
 
 
-    @Override
-    protected void onResume() {
+    /*@Override
+    /*protected void onResume() {
         super.onResume();
         setEmptyText();
         mAdapter.notifyDataSetChanged();
-    }
+    }*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,9 @@ public class TaskListActivity extends AppCompatActivity {
         model.getLiveTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
+                setEmptyText();
                 mAdapter.notifyDataSetChanged();
+
             }
         });
         defineViews();
