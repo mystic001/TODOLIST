@@ -66,7 +66,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
             return ;
         }
         mtask.setTitle(mTitleField.getText().toString());
-        //.addTask(mtask);
+        new TaskViewModel(getApplication()).addtask(mtask);
         finish();
     }
 
