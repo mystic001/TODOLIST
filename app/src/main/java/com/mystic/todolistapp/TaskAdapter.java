@@ -1,7 +1,6 @@
 package com.mystic.todolistapp;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
     private Context context ;
     private TaskAdapterListener listener ;
 
-    public TaskAdapter(List<Task> mTask,  Context context) {
+    public TaskAdapter(List<Task> mTask, Context context) {
         this.mTask = mTask;
         this.context = context;
     }
@@ -38,22 +37,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         final Task mBindTask = mTask.get(position);
         holder.spectitle.setText(mBindTask.getTitle());
         if(mBindTask.getDate() != null){
-            holder.dateStr.setText(mBindTask.getDate().toString());
+            holder.dateStr.setText(mBindTask.getDate());
         }
        // holder.box.setChecked(mBindTask.getChecked());
 
         if (holder.box.isChecked()) {
             mBindTask.setChecked(true);
-
-
         }
 
-        holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-            }
-        });
 
 
     }
@@ -64,6 +56,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
     }
 //Custom listener that makes the adapter listen to clicks
     public void setListenerForAdapter(TaskAdapterListener listener){
+
         this.listener = listener;
     }
 

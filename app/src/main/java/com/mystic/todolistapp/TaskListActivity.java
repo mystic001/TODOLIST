@@ -56,12 +56,16 @@ public class TaskListActivity extends AppCompatActivity {
         defineViews();
         List<Task> mListOfTasks ;
         //Gets access to the livedata and convert it to Listof data using getValue method;
-        mListOfTasks = model.getLiveTasks().getValue();
-        mAdapter = new TaskAdapter(mListOfTasks,this);
+        mListOfTasks = model.getLiveTasks().getValue();//Problem is from here
+        if(mListOfTasks == null){
+            Toast.makeText(this,"This is null",Toast.LENGTH_LONG).show();
+            return;
+        }
 
+        mAdapter = new TaskAdapter(mListOfTasks,this);
         mCrimeRecyclerView.setAdapter(mAdapter);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Log.d("TaskListActivity",""+mAdapter.getItemCount());
+
         btn_float.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

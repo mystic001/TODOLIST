@@ -2,6 +2,7 @@ package com.mystic.todolistapp;
 
 import android.text.format.Time;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,7 +12,8 @@ import java.util.UUID;
 public class Task {
 
     @PrimaryKey
-    private UUID uuid;
+    @NonNull
+    private String uuid;
 
     private String title;
     private String date ;
@@ -19,7 +21,23 @@ public class Task {
 
     public Task() {
         this.done = false;
-        uuid = UUID.randomUUID();
+        uuid = UUID.randomUUID().toString();
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {
