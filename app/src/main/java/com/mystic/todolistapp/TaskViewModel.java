@@ -1,27 +1,28 @@
 package com.mystic.todolistapp;
 
 import android.app.Application;
-import android.content.Context;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+
 
 import java.util.List;
 
 public class TaskViewModel extends AndroidViewModel {
     private TaskLab taskLab;
+    private LiveData<List<Task>> allTasks;
 
     public TaskViewModel(@NonNull Application application) {
         super(application);
-        taskLab = TaskLab.getInstance();
+        taskLab = new TaskLab(application);
+        allTasks = taskLab.getAllTasks();
     }
 
 
     public LiveData<List<Task>> getLiveTasks() {
-        return taskLab.getTasksLive();
+        return allTasks;
     }
 
     public void delete(int pos){
@@ -29,7 +30,6 @@ public class TaskViewModel extends AndroidViewModel {
     }
 
     public void addtask(Task task){
-
         // i Stopped here;
         taskLab.addTask(task);
     }

@@ -27,7 +27,7 @@ public class TaskLab {
     }
 
 
-    public LiveData<List<Task>> getTasksLive(){
+    public LiveData<List<Task>> getAllTasks(){
         return tasks;
     }
 

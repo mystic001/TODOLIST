@@ -30,6 +30,7 @@ public class TaskListActivity extends AppCompatActivity {
     private FloatingActionButton btn_float;
     private TextView empty_TV ;
     private TextView textView;
+    private TaskViewModel model;
 
 
     @Override
@@ -42,7 +43,7 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
-        TaskViewModel model = new ViewModelProvider(this).get(TaskViewModel.class);
+        model = new ViewModelProvider(this).get(TaskViewModel.class);
         model.getLiveTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
@@ -102,7 +103,7 @@ public class TaskListActivity extends AppCompatActivity {
         mAdapter.setListenerForAdapter(new TaskAdapter.TaskAdapterListener() {
             @Override
             public void onClickdelete(int position) {
-                new TaskLab(getApplication()).removeTask(position);
+                model.delete(position);
                 mAdapter.notifyItemRemoved(position);
                 setEmptyText();
             }
