@@ -68,10 +68,42 @@ public class TaskLab {
     }
 
 
-
+    //the delete operation is carried out here;
     public void removeTask(int position){
-        mListTask.remove(position);
+        deleteTask(position);
     }
+
+    private void deleteTask(int position) {
+        deletTask(position).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<Task>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull List<Task> tasks) {
+                        mListTask = tasks;
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
+    private Single<List<Task>> deletTask(final int position) {
+        return Single.fromCallable(new Callable<List<Task>>() {
+            @Override
+            public List<Task> call() {
+                mListTask.remove(position);
+                return mListTask;
+            }
+        });
+
+    }
+
 
 }
 
