@@ -23,7 +23,7 @@ public class TaskLab {
         //Because the method needed to display all task uses @query which automatically executes in the background;
         //For every other operation you have to run them in the background yourself;
         tasks = taskDao.getAllTasks();
-        mListTask = new ArrayList<>();
+        mListTask = tasks.getValue();
     }
 
 
@@ -55,14 +55,11 @@ public class TaskLab {
                 });
     }
 
-   //The task we want to add is being based as a parameter to the Single addtask
+   //The task we want to add is being added as a parameter to the Single addtask
     public Single<List<Task>> addTasks(final Task task){
-        return Single.fromCallable(new Callable<List<Task>>() {
-            @Override
-            public List<Task> call() {
-                mListTask.add(task);
-              return mListTask;
-            }
+        return Single.fromCallable(() -> {
+            mListTask.add(task);
+          return mListTask;
         });
 
     }
