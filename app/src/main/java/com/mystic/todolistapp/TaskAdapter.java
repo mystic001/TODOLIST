@@ -15,17 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
-    private List<Task> mTask;
+    private List<Task> mTask = new ArrayList<>() ;
     private TaskAdapterListener listener ;
-
-    public TaskAdapter() {
-        mTask = new ArrayList<>();
-    }
-
-    /*public TaskAdapter(List<Task> mTask, Context context) {
-        this.mTask = mTask;
-        this.context = context;
-    }*/
 
     @NonNull
     @Override
@@ -55,10 +46,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
     }
 //Custom listener that makes the adapter listen to clicks
     public void setListenerForAdapter(TaskAdapterListener listener){
-
         this.listener = listener;
     }
 
+    //The method below is what sets the List of tasks we are getting from the ViewModel to the list of tasks in this adapter
+    public void setTask(List<Task> task){
+        mTask = task;
+        notifyDataSetChanged();
+    }
 
     public class TaskHolder extends RecyclerView.ViewHolder {
         CardView cardView ;

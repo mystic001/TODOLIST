@@ -45,6 +45,10 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+        defineViews();
+        mAdapter = new TaskAdapter();
+        mCrimeRecyclerView.setAdapter(mAdapter);
+        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         model = new ViewModelProvider(this).get(TaskViewModel.class);
         model.getLiveTasks().observe(this, new Observer<List<Task>>() {
             @Override
@@ -52,14 +56,12 @@ public class TaskListActivity extends AppCompatActivity {
                 //Gets access to the livedata
                 mListOfTasks = tasks;
                 setEmptyText();
-                mAdapter.notifyDataSetChanged();
+                mAdapter.setTask(tasks);
 
             }
         });
-        defineViews();
-        mAdapter = new TaskAdapter();
-        mCrimeRecyclerView.setAdapter(mAdapter);
-        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
 
         btn_float.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,8 +93,7 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     private void setEmptyText() {
-        if(mAdapter.getItemCount() > 0){
-            Log.d("TaskListActivity",""+mAdapter.getItemCount());
+        if(mListOfTasks.size() > 0){
             empty_TV.setVisibility(View.GONE);
         }else{
             empty_TV.setVisibility(View.VISIBLE);

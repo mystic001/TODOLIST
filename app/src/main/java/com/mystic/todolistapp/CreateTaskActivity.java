@@ -68,7 +68,6 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         }
         mtask.setTitle(mTitleField.getText().toString());
         new TaskViewModel(getApplication()).addtask(mtask);
-        Toast.makeText(this,"success",Toast.LENGTH_LONG).show();
         finish();
     }
 
