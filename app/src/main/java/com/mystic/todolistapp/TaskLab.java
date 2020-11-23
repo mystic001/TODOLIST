@@ -1,5 +1,4 @@
 package com.mystic.todolistapp;
-import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
@@ -27,6 +26,7 @@ public class TaskLab {
         //Because the method needed to display all task uses @query which automatically executes in the background;
         //For every other operation you have to run them in the background yourself;
         tasks = taskDao.getAllTasks();
+        //This mListtask is not neccesarily doing anything in dis code but it is only here so we can have something to return in our rxjava Single
         mListTask = new ArrayList<>();
     }
 
@@ -109,6 +109,9 @@ public class TaskLab {
         });
 
     }
+
+
+
 
 
 }
