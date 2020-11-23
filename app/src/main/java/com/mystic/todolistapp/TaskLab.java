@@ -1,10 +1,12 @@
 package com.mystic.todolistapp;
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Single;
@@ -15,15 +17,24 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class TaskLab {
     private List<Task> mListTask;
     private LiveData<List<Task>> tasks;
+    private TaskDao taskDao;
+    private static TaskLab sTaskLab;
 
-    public TaskLab(Application application) {
-        TaskDatabase database = TaskDatabase.getTaskDatabaseInstance(application);
-        TaskDao taskDao = database.taskDao();
+    private TaskLab(Context context) {
+        TaskDatabase database = TaskDatabase.getTaskDatabaseInstance(context.getApplicationContext());
+        taskDao = database.taskDao();
         //Dont worry this operation to getAllTasks is automatically carried out in the database
         //Because the method needed to display all task uses @query which automatically executes in the background;
         //For every other operation you have to run them in the background yourself;
         tasks = taskDao.getAllTasks();
-        mListTask = tasks.getValue();
+        mListTask = new ArrayList<>();
+    }
+
+    public static TaskLab getsTaskLab(Context context){
+        if(sTaskLab == null){
+            sTaskLab = new TaskLab(context);
+        }
+        return sTaskLab;
     }
 
 
@@ -58,8 +69,9 @@ public class TaskLab {
    //The task we want to add is being added as a parameter to the Single addtask
     public Single<List<Task>> addTasks(final Task task){
         return Single.fromCallable(() -> {
-            mListTask.add(task);
-          return mListTask;
+            taskDao.insert(task);
+           // mListTask.add(task);
+            return mListTask;
         });
 
     }
@@ -91,12 +103,9 @@ public class TaskLab {
     }
 
     private Single<List<Task>> deletTask(final int position) {
-        return Single.fromCallable(new Callable<List<Task>>() {
-            @Override
-            public List<Task> call() {
-                mListTask.remove(position);
-                return mListTask;
-            }
+        return Single.fromCallable(() -> {
+            //taskDao.delete(position);
+            return mListTask;
         });
 
     }

@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -67,6 +68,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         }
         mtask.setTitle(mTitleField.getText().toString());
         new TaskViewModel(getApplication()).addtask(mtask);
+        Toast.makeText(this,"success",Toast.LENGTH_LONG).show();
         finish();
     }
 
