@@ -24,7 +24,6 @@ import java.util.List;
 
 public class TaskListActivity extends AppCompatActivity {
 
-
     private  List<Task> mListOfTasks ;
     private RecyclerView mCrimeRecyclerView;
     private TaskAdapter mAdapter;
@@ -32,14 +31,6 @@ public class TaskListActivity extends AppCompatActivity {
     private TextView empty_TV ;
     private TextView textView;
     private TaskViewModel model;
-
-
-    /*@Override
-    /*protected void onResume() {
-        super.onResume();
-        setEmptyText();
-        mAdapter.notifyDataSetChanged();
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,32 +41,19 @@ public class TaskListActivity extends AppCompatActivity {
         mCrimeRecyclerView.setAdapter(mAdapter);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         model = new ViewModelProvider(this).get(TaskViewModel.class);
-        model.getLiveTasks().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(List<Task> tasks) {
-                //Gets access to the livedata
-                mListOfTasks = tasks;
-                setEmptyText();
-                mAdapter.setTask(tasks);
+        model.getLiveTasks().observe(this, tasks -> {
+            //Gets access to the livedata
+            mListOfTasks = tasks;
+            setEmptyText();
+            mAdapter.setTask(tasks);
 
-            }
         });
 
 
 
-        btn_float.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startAnother();
-            }
-        });
+        btn_float.setOnClickListener(view -> startAnother());
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startAnother();
-            }
-        });
+        textView.setOnClickListener(view -> startAnother());
 
         removalListener();
     }
@@ -103,14 +81,11 @@ public class TaskListActivity extends AppCompatActivity {
 
     //This deletes the item from d list of tasks
     public void removalListener(){
-        mAdapter.setListenerForAdapter(new TaskAdapter.TaskAdapterListener() {
-            @Override
-            public void onClickdelete(int position) {
-                Task task = mListOfTasks.get(position);
-                model.delete(task);
-                mAdapter.notifyItemRemoved(position);
-                setEmptyText();
-            }
+        mAdapter.setListenerForAdapter(position -> {
+            Task task = mListOfTasks.get(position);
+            model.delete(task);
+            mAdapter.notifyItemRemoved(position);
+            setEmptyText();
         });
 
     }
