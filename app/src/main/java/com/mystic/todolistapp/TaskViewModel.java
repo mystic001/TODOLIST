@@ -25,8 +25,8 @@ public class TaskViewModel extends AndroidViewModel {
         return allTasks;
     }
 
-    public void delete(int pos){
-        taskLab.removeTask(pos);
+    public void delete(Task task){
+        taskLab.removeTask(task);
     }
 
     public void addtask(Task task){

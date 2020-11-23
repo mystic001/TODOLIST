@@ -106,7 +106,8 @@ public class TaskListActivity extends AppCompatActivity {
         mAdapter.setListenerForAdapter(new TaskAdapter.TaskAdapterListener() {
             @Override
             public void onClickdelete(int position) {
-                model.delete(position);
+                Task task = mListOfTasks.get(position);
+                model.delete(task);
                 mAdapter.notifyItemRemoved(position);
                 setEmptyText();
             }
