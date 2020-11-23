@@ -25,6 +25,7 @@ import java.util.List;
 public class TaskListActivity extends AppCompatActivity {
 
 
+    private  List<Task> mListOfTasks ;
     private RecyclerView mCrimeRecyclerView;
     private TaskAdapter mAdapter;
     private FloatingActionButton btn_float;
@@ -48,21 +49,15 @@ public class TaskListActivity extends AppCompatActivity {
         model.getLiveTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
+                //Gets access to the livedata
+                mListOfTasks = tasks;
                 setEmptyText();
                 mAdapter.notifyDataSetChanged();
 
             }
         });
         defineViews();
-        List<Task> mListOfTasks ;
-        //Gets access to the livedata and convert it to Listof data using getValue method;
-        mListOfTasks = model.getLiveTasks().getValue();//Problem is from here
-        if(mListOfTasks == null){
-            Toast.makeText(this,"This is null",Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        mAdapter = new TaskAdapter(mListOfTasks,this);
+        mAdapter = new TaskAdapter();
         mCrimeRecyclerView.setAdapter(mAdapter);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

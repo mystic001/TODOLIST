@@ -13,17 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
-    private List<Task> mTask;
-    private Context context ;
+    private List<Task> mTask = new ArrayList<>();
     private TaskAdapterListener listener ;
 
-    public TaskAdapter(List<Task> mTask, Context context) {
+    /*public TaskAdapter(List<Task> mTask, Context context) {
         this.mTask = mTask;
         this.context = context;
-    }
+    }*/
 
     @NonNull
     @Override
@@ -44,9 +44,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         if (holder.box.isChecked()) {
             mBindTask.setChecked(true);
         }
-
-
-
 
     }
 
