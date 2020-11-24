@@ -17,6 +17,7 @@ public class Task {
 
     private String title;
     private String date ;
+    private String image;
     private boolean done;
 
     public Task() {
@@ -42,6 +43,14 @@ public class Task {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setTitle(String title) {

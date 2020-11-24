@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,6 @@ public class TaskLab {
     public Single<List<Task>> addTasks(final Task task){
         return Single.fromCallable(() -> {
             taskDao.insert(task);
-           // mListTask.add(task);
             return mListTask;
         });
 
@@ -109,6 +109,8 @@ public class TaskLab {
         });
 
     }
+
+
 
 
 }

@@ -30,7 +30,7 @@ import java.util.GregorianCalendar;
 
 public class CreateTaskActivity extends AppCompatActivity implements DatePickerDialog.DateListesener, View.OnClickListener {
     private static final String DIALOG_DATE = "DialogDate";
-    private static final String DIALOG_TIME = "DialogTime" ;
+    //private static final String DIALOG_TIME = "DialogTime" ;
     private TextInputEditText mTitleField;
     private Button setTime;
     private Button btnAdd ;
@@ -38,8 +38,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     private Task mtask = new Task();
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imageView;
-    private String currentPhotoPath;
-
+    private Uri photoURI;
 
 
     @Override
@@ -80,6 +79,9 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
         if( (mTitleField.getText().toString().equals(""))){
             return ;
+        }
+        if(photoURI != null){
+            mtask.setImage(photoURI.toString());
         }
         mtask.setTitle(mTitleField.getText().toString());
         new TaskViewModel(getApplication()).addtask(mtask);
@@ -138,9 +140,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
             // Continue only if the File was successfully created
 
             if(photoFile != null){
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.mystic.todolistapp.fileprovider",
-                        photoFile);
+                photoURI = FileProvider.getUriForFile(this, "com.mystic.todolistapp.fileprovider", photoFile);
                 try {
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -163,7 +163,6 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         }
     }
 
-
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -176,7 +175,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
+        String currentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
