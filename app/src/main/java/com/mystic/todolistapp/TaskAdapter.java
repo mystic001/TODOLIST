@@ -1,5 +1,6 @@
 package com.mystic.todolistapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
-    private List<Task> mTask = new ArrayList<>() ;
+    private List<Task> mTask;
     private TaskAdapterListener listener ;
+    private Context context;
+
+    public TaskAdapter(Context context){
+        this.context = context;
+        mTask = new ArrayList<>() ;
+    }
 
     @NonNull
     @Override
@@ -34,9 +41,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         }
        // holder.box.setChecked(mBindTask.getChecked());
 
-        if (holder.box.isChecked()) {
-            mBindTask.setChecked(true);
-        }
+        holder.box.setOnClickListener(view->{
+            if(holder.box.isChecked()) {
+                mBindTask.setChecked(true);
+            } else{
+                mBindTask.setChecked(false);
+            }
+
+            TaskLab.getsTaskLab(context)
+                    .getTaskDao()
+                    .update(mBindTask);
+
+        });
 
     }
 

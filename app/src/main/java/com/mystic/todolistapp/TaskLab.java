@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -111,8 +112,8 @@ public class TaskLab {
     }
 
 
-
-
-
+    public TaskDao getTaskDao() {
+        return taskDao;
+    }
 }
 
