@@ -1,10 +1,8 @@
 package com.mystic.todolistapp;
-import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +34,10 @@ public class TaskLab {
             sTaskLab = new TaskLab(context);
         }
         return sTaskLab;
+    }
+
+    public TaskDao getTaskDao(){
+        return taskDao;
     }
 
 

@@ -47,6 +47,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
 
 
         holder.box.setOnClickListener(view->{
+            if(mBindTask.getChecked()){
+                mBindTask.setChecked(false);
+            } else{
+                mBindTask.setChecked(true);
+            }
+
+            TaskLab.getsTaskLab(context)
+                    .getTaskDao()
+                    .update(mBindTask);
 
         });
 
