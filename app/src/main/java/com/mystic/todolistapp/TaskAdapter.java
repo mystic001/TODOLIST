@@ -45,12 +45,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
             holder.dateStr.setText(mBindTask.getDate());
         }
 
+       /* if (holder.box.isChecked()) {
+            mBindTask.setChecked(true);
 
-        holder.box.setOnClickListener(view->{
-            if(mBindTask.getChecked()){
-                mBindTask.setChecked(false);
-            } else{
-                mBindTask.setChecked(true);
+        } else{
+            mBindTask.setChecked(false);
+
+        }
+        TaskLab.getsTaskLab(context)
+                .getTaskDao()
+                .update(mBindTask);*/
+
+       holder.box.setOnClickListener(view->{
+            if(holder.box.isChecked()) {
+            mBindTask.setChecked(true);
+              } else{
+            mBindTask.setChecked(false);
             }
 
             TaskLab.getsTaskLab(context)
@@ -68,9 +78,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
                     .into(holder.imag);
         }
 
-        if (holder.box.isChecked()) {
-            mBindTask.setChecked(true);
-        }
+
 
     }
 
