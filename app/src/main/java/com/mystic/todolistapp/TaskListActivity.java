@@ -37,7 +37,7 @@ public class TaskListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
         defineViews();
-        mAdapter = new TaskAdapter();
+        mAdapter = new TaskAdapter(this);
         mCrimeRecyclerView.setAdapter(mAdapter);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         model = new ViewModelProvider(this).get(TaskViewModel.class);

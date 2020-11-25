@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
+import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -82,7 +83,6 @@ public class TaskLab {
     public void removeTask(Task task){
         deleteTask(task);
     }
-
     private void deleteTask(Task task) {
         deletTask(task).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -111,9 +111,38 @@ public class TaskLab {
 
     }
 
+    public void updateTask(Task task){
+        updateTaskInBackground(task)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Void>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
-    public TaskDao getTaskDao() {
-        return taskDao;
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Void aVoid) {
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+
+                    }
+                });
+
     }
+
+    public Single<Void> updateTaskInBackground(Task task){
+        return Single.fromCallable(() -> {
+            taskDao.update(task);
+            return  null;
+        });
+    }
+
+
+
 }
 
