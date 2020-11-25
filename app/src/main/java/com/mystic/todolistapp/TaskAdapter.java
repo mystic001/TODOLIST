@@ -1,10 +1,12 @@
 package com.mystic.todolistapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,15 +43,33 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         }
        // holder.box.setChecked(mBindTask.getChecked());
 
-
-           if(holder.box.isChecked()) {
-                mBindTask.setChecked(true);
-                TaskLab.getsTaskLab(context).updateTask(mBindTask);
-
-            } else{
-                mBindTask.setChecked(false);
-               TaskLab.getsTaskLab(context).updateTask(mBindTask);
+        holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Log.d("taskAdapter",""+mBindTask.isDone());
+               if(mBindTask.isDone()){
+                   mBindTask.setDone(false);
+                   TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                   Log.d("TaskAdapter",""+mBindTask.isDone());
+               }else{
+                   mBindTask.setDone(true);
+                   TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                   Log.d("TaskAdapter",""+mBindTask.isDone());
+               }
             }
+        });
+
+
+        /*
+        *  if(holder.box.isChecked()) {
+                    mBindTask.setChecked(true);
+                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                } else{
+                    mBindTask.setChecked(false);
+                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                }
+        *
+        * */
 
 
 

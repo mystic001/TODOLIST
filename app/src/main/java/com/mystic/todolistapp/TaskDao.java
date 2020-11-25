@@ -11,7 +11,7 @@ import java.util.List;
 
 @Dao
 public interface TaskDao {
-    @Query("SELECT * FROM Task_table")
+    @Query("SELECT * FROM Task_table ORDER BY date DESC")
     LiveData<List<Task>> getAllTasks();
 
     @Insert
