@@ -50,7 +50,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                //
+                if(mBindTask.isDone()){
+                    mBindTask.setDone(false);
+                    TaskLab.getsTaskLab(context).updatetask(mBindTask);
+                } else{
+                    mBindTask.setDone(true);
+                    TaskLab.getsTaskLab(context).updatetask(mBindTask);
+                }
             }
         });
 
@@ -65,18 +71,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
                 .getTaskDao()
                 .update(mBindTask);*/
 
-       holder.box.setOnClickListener(view->{
-            if(holder.box.isChecked()) {
-            mBindTask.setChecked(true);
-              } else{
-            mBindTask.setChecked(false);
-            }
-
-            TaskLab.getsTaskLab(context)
-                    .getTaskDao()
-                    .update(mBindTask);
-
-        });
 
         if(holder.imag != null){
 

@@ -1,7 +1,5 @@
 package com.mystic.todolistapp;
 
-import android.text.format.Time;
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -11,10 +9,10 @@ import java.util.UUID;
 @Entity(tableName = "Task_table")
 public class Task {
 
+
     @PrimaryKey
     @NonNull
     private String uuid;
-
     private String title;
     private String date ;
     private String image;

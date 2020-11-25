@@ -39,6 +39,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imageView;
     private Uri photoURI;
+    private Uri photolocator;
 
 
     @Override
@@ -78,10 +79,11 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     public void addToDo(){
 
         if( (mTitleField.getText().toString().equals(""))){
+
             return ;
         }
         if(photoURI != null){
-            mtask.setImage(photoURI.toString());
+            mtask.setImage(photolocator.toString());
         }
         mtask.setTitle(mTitleField.getText().toString());
         new TaskViewModel(getApplication()).addtask(mtask);
@@ -159,6 +161,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
             assert data != null;
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+            photolocator =(Uri) data.getExtras().get(MediaStore.EXTRA_OUTPUT);
             imageView.setImageBitmap(imageBitmap);
         }
     }

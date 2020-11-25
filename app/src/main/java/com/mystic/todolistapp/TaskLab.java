@@ -1,13 +1,16 @@
 package com.mystic.todolistapp;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -36,9 +39,6 @@ public class TaskLab {
         return sTaskLab;
     }
 
-    public TaskDao getTaskDao(){
-        return taskDao;
-    }
 
 
     public LiveData<List<Task>> getAllTasks(){
@@ -110,6 +110,27 @@ public class TaskLab {
             return mListTask;
         });
 
+    }
+
+
+    public void updatetask(Task task){
+        uptaskInBack(task)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+
+
+    private Single<Void> uptaskInBack(Task task){
+        return Single.fromCallable(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                taskDao.update(task);
+                Log.d("TaskLab","I updated succesfuly");
+                return null;
+            }
+        });
     }
 
 
