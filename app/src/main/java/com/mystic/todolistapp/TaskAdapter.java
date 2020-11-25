@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +45,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         if(mBindTask.getDate() != null){
             holder.dateStr.setText(mBindTask.getDate());
         }
+
+
+        holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                //
+            }
+        });
 
        /* if (holder.box.isChecked()) {
             mBindTask.setChecked(true);

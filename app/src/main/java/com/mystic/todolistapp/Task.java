@@ -65,11 +65,4 @@ public class Task {
         this.date = date;
     }
 
-    public boolean getChecked() {
-        return done;
-    }
-
-    public void setChecked(boolean done) {
-        this.done = done;
-    }
 }
