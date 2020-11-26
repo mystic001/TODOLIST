@@ -113,23 +113,34 @@ public class TaskLab {
     }
 
 
-    public void updatetask(Task task){
-        uptaskInBack(task)
+    public void updateTask(Task task){
+        updateTaskInBackground(task)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(new SingleObserver<Void>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Void aVoid) {
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+
+                    }
+                });
+
     }
 
-
-
-    private Single<Void> uptaskInBack(Task task){
-        return Single.fromCallable(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                taskDao.update(task);
-                Log.d("TaskLab","I updated succesfuly");
-                return null;
-            }
+    public Single<Void> updateTaskInBackground(Task task){
+        return Single.fromCallable(() -> {
+            taskDao.update(task);
+            return  null;
         });
     }
 
