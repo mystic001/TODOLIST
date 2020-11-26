@@ -140,6 +140,7 @@ public class TaskLab {
     public Single<Void> updateTaskInBackground(Task task){
         return Single.fromCallable(() -> {
             taskDao.update(task);
+            Log.d("TaskLab",""+task.isDone());
             return  null;
         });
     }

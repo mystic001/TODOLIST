@@ -50,11 +50,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(mBindTask.isDone()){
-                    mBindTask.setDone(false);
+                if(!mBindTask.isDone()){
+                    mBindTask.setDone(true);
                     TaskLab.getsTaskLab(context).updateTask(mBindTask);
                 } else{
-                    mBindTask.setDone(true);
+                    mBindTask.setDone(false);
                     TaskLab.getsTaskLab(context).updateTask(mBindTask);
                 }
             }

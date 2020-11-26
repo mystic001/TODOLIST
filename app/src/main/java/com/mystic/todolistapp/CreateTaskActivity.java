@@ -164,6 +164,10 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
             photolocator =(Uri) data.getExtras().get(MediaStore.EXTRA_OUTPUT);
             imageView.setImageBitmap(imageBitmap);
         }
+
+        if(resultCode == RESULT_CANCELED && requestCode == REQUEST_IMAGE_CAPTURE){
+            Toast.makeText(this,"Sorry action cancelled",Toast.LENGTH_LONG).show();
+        }
     }
 
     private File createImageFile() throws IOException {
