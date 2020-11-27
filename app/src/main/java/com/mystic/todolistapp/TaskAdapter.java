@@ -72,14 +72,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
                 .update(mBindTask);*/
 
 
-        /*if(holder.imag != null){
+        if(mBindTask.getImage() != null){
 
             Glide.with(context)
                     .asBitmap()
                     .circleCrop()
                     .load(Uri.parse(mBindTask.getImage()))
                     .into(holder.imag);
-        }*/
+        }
 
 
 
