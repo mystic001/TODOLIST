@@ -16,18 +16,21 @@ public class Task {
     private String title;
     private String date ;
     private String image;
-    private boolean done;
+
+
+
+    private int done;
 
     public Task() {
-        this.done = false;
+        this.done = 0;
         uuid = UUID.randomUUID().toString();
     }
 
-    public boolean isDone() {
+    public int getDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(int done) {
         this.done = done;
     }
 

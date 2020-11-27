@@ -69,13 +69,16 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             taskHolder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if(!mBindTask.isDone()){
-                        mBindTask.setDone(true);
-                        TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                    if(mBindTask.getDone() == 0){
+                        mBindTask.setDone(1);
+                        taskHolder.box.setChecked(true);
+                        taskHolder.box.isChecked();
                     } else{
-                        mBindTask.setDone(false);
-                        TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                        mBindTask.setDone(0);
+                        taskHolder.box.setChecked(false);
+                        taskHolder.box.isChecked();
                     }
+                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
                 }
             });
 
@@ -91,13 +94,16 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             taskHolder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if(!mBindTask.isDone()){
-                        mBindTask.setDone(true);
-                        TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                    if(mBindTask.getDone() == 0){
+                        mBindTask.setDone(1);
+                        taskHolder.box.setChecked(true);
+                        taskHolder.box.isChecked();
                     } else{
-                        mBindTask.setDone(false);
-                        TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                        mBindTask.setDone(0);
+                        taskHolder.box.setChecked(false);
+                        taskHolder.box.isChecked();
                     }
+                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
                 }
             });
 
