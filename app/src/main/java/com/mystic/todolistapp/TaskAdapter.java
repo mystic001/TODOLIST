@@ -65,6 +65,7 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                 taskHolder.dateStr.setText(mBindTask.getDate());
             }
 
+            taskHolder.box.setChecked((mBindTask.getDone()== 1));
             taskHolder.box.setOnCheckedChangeListener((compoundButton, b) -> {
                 if(mBindTask.getDone() == 0){
                     mBindTask.setDone(1);
@@ -86,15 +87,13 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                 taskHolder.dateStr.setText(mBindTask.getDate());
             }
 
+            taskHolder.box.setChecked((mBindTask.getDone()== 1));
             taskHolder.box.setOnCheckedChangeListener((compoundButton, b) -> {
                 if(mBindTask.getDone() == 0){
                     mBindTask.setDone(1);
-                    taskHolder.box.setChecked(true);
                 } else{
                     mBindTask.setDone(0);
-                    taskHolder.box.setChecked(false);
                 }
-                taskHolder.box.isChecked();
                 TaskLab.getsTaskLab(context).updateTask(mBindTask);
             });
 
