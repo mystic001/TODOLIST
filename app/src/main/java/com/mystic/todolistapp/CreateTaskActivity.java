@@ -15,11 +15,13 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
@@ -39,6 +41,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imageView;
     private Uri photoURI;
+    private static final String TAG = "CreateActivity";
     private Uri photolocator;
 
 
@@ -83,7 +86,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
             return ;
         }
         if(photoURI != null){
-            mtask.setImage(photolocator.toString());
+            mtask.setImage(photoURI.toString());
         }
         mtask.setTitle(mTitleField.getText().toString());
         new TaskViewModel(getApplication()).addtask(mtask);
@@ -131,10 +134,13 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Log.d(TAG,"started 1");
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
+            Log.d(TAG,"started 2");
             try {
                 photoFile = createImageFile();
+                Log.d(TAG,"started 3");
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }
@@ -143,12 +149,12 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
             if(photoFile != null){
                 photoURI = FileProvider.getUriForFile(this, "com.mystic.todolistapp.fileprovider", photoFile);
-                try {
+                Log.d(TAG,"started 4");
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    Log.d(TAG,"started 5");
+                    Log.d("Create",""+photoURI);
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                } catch (ActivityNotFoundException e) {
-                    // display error state to the user
-                }
+                    Log.d(TAG,"started 6");
             }
         }
 
@@ -158,16 +164,23 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            assert data != null;
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            photolocator =(Uri) data.getExtras().get(MediaStore.EXTRA_OUTPUT);
-            imageView.setImageBitmap(imageBitmap);
+            Glide.with(getApplicationContext()).load(photoURI).into(imageView);
+        }
+        /*Log.d(TAG,"started 7");
+        Log.d("CreateActivity",""+data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            if(data != null){
+                Glide.with(getApplicationContext())
+                        .load(photoURI)
+                        .into(imageView);
+                Log.d(TAG,"started 8");
+            }
+            Log.d(TAG,"started 9");
         }
 
         if(resultCode == RESULT_CANCELED && requestCode == REQUEST_IMAGE_CAPTURE){
             Toast.makeText(this,"Sorry action cancelled",Toast.LENGTH_LONG).show();
-        }
+        }*/
     }
 
     private File createImageFile() throws IOException {
