@@ -113,7 +113,7 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     public int getItemCount() {
         return mTask.size();
     }
-//Custom listener that makes the adapter listen to clicks
+    //Custom listener that makes the adapter listen to clicks
     public void setListenerForAdapter(TaskAdapterListener listener){
         this.listener = listener;
     }
