@@ -7,8 +7,9 @@
     <string name="title">title</string>
     <string name="supposed_date">Supposed Date</string>
     <string name="checkbox">CheckBox</string>
-    <string name="set_time">Set Time</string>
+    <string name="set_time">Take A Picture</string>
     <string name="add_to_todos">Add To TODOS</string>
     <string name="to_delete">To delete</string>
     <string name="empty">Your To do list is empty\n Click on the icon below to add new to do</string>
+    <string name="todo">TODO</string>
 </resources>

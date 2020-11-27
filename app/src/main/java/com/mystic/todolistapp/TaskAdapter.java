@@ -1,7 +1,7 @@
 package com.mystic.todolistapp;
 
 import android.content.Context;
-import android.util.Log;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +14,22 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
-    private List<Task> mTask;
+    private List<Task> mTask = new ArrayList<>() ;
     private TaskAdapterListener listener ;
     private Context context;
 
+
+    //I created this constructor and passed context parameter to it so i could use the context in glide
     public TaskAdapter(Context context){
         this.context = context;
-        mTask = new ArrayList<>() ;
     }
+
 
     @NonNull
     @Override
@@ -41,36 +45,41 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         if(mBindTask.getDate() != null){
             holder.dateStr.setText(mBindTask.getDate());
         }
-       // holder.box.setChecked(mBindTask.getChecked());
+
 
         holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.d("taskAdapter",""+mBindTask.isDone());
-               if(mBindTask.isDone()){
-                   mBindTask.setDone(false);
-                   TaskLab.getsTaskLab(context).updateTask(mBindTask);
-                   Log.d("TaskAdapter",""+mBindTask.isDone());
-               }else{
-                   mBindTask.setDone(true);
-                   TaskLab.getsTaskLab(context).updateTask(mBindTask);
-                   Log.d("TaskAdapter",""+mBindTask.isDone());
-               }
+                if(!mBindTask.isDone()){
+                    mBindTask.setDone(true);
+                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                } else{
+                    mBindTask.setDone(false);
+                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                }
             }
         });
 
+       /* if (holder.box.isChecked()) {
+            mBindTask.setChecked(true);
 
-        /*
-        *  if(holder.box.isChecked()) {
-                    mBindTask.setChecked(true);
-                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
-                } else{
-                    mBindTask.setChecked(false);
-                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
-                }
-        *
-        * */
+        } else{
+            mBindTask.setChecked(false);
 
+        }
+        TaskLab.getsTaskLab(context)
+                .getTaskDao()
+                .update(mBindTask);*/
+
+
+        if(mBindTask.getImage() != null){
+
+            Glide.with(context)
+                    .asBitmap()
+                    .circleCrop()
+                    .load(Uri.parse(mBindTask.getImage()))
+                    .into(holder.imag);
+        }
 
 
 
@@ -93,6 +102,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
 
     public class TaskHolder extends RecyclerView.ViewHolder {
         CardView cardView ;
+        ImageView imag;
         TextView spectitle ,dateStr;
         ImageView imageView;
         CheckBox box;
@@ -102,16 +112,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
             spectitle = itemview.findViewById(R.id.realtitle);
             dateStr = itemview.findViewById(R.id.date_str);
             box = itemview.findViewById(R.id.checkBox);
+            imag = itemview.findViewById(R.id.taskimaage);
             imageView = itemview.findViewById(R.id.imageView);
 
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(listener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            listener.onClickdelete(position);
-                        }
+            imageView.setOnClickListener(view -> {
+                if(listener != null){
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        listener.onClickdelete(position);
                     }
                 }
             });

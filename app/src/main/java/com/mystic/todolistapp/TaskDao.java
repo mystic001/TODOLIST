@@ -17,10 +17,13 @@ public interface TaskDao {
     @Insert
     void insert(Task task);
 
+
     @Update
-    void  update(Task task);
+    void update(Task task);
 
     @Delete
     void delete(Task task);
+
+
 
 }

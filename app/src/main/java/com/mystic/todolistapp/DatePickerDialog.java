@@ -34,7 +34,7 @@ public class DatePickerDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
         mDatePicker = view.findViewById(R.id.date_picker);
-        mDatePicker.setMinDate(System.currentTimeMillis() - 1000);
+        mDatePicker.setMinDate(System.currentTimeMillis() - 1000);//This prevents the selection of dates in the past;
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

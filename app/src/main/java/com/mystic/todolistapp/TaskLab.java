@@ -1,15 +1,16 @@
 package com.mystic.todolistapp;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -28,7 +29,6 @@ public class TaskLab {
         //Because the method needed to display all task uses @query which automatically executes in the background;
         //For every other operation you have to run them in the background yourself;
         tasks = taskDao.getAllTasks();
-        //This mListtask is not neccesarily doing anything in dis code but it is only here so we can have something to return in our rxjava Single
         mListTask = new ArrayList<>();
     }
 
@@ -38,6 +38,7 @@ public class TaskLab {
         }
         return sTaskLab;
     }
+
 
 
     public LiveData<List<Task>> getAllTasks(){
@@ -72,7 +73,6 @@ public class TaskLab {
     public Single<List<Task>> addTasks(final Task task){
         return Single.fromCallable(() -> {
             taskDao.insert(task);
-           // mListTask.add(task);
             return mListTask;
         });
 
@@ -83,6 +83,7 @@ public class TaskLab {
     public void removeTask(Task task){
         deleteTask(task);
     }
+
     private void deleteTask(Task task) {
         deletTask(task).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -111,6 +112,7 @@ public class TaskLab {
 
     }
 
+
     public void updateTask(Task task){
         updateTaskInBackground(task)
                 .subscribeOn(Schedulers.io())
@@ -138,9 +140,11 @@ public class TaskLab {
     public Single<Void> updateTaskInBackground(Task task){
         return Single.fromCallable(() -> {
             taskDao.update(task);
+            Log.d("TaskLab",""+task.isDone());
             return  null;
         });
     }
+
 
 
 
