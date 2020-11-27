@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
+public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private List<Task> mTask = new ArrayList<>() ;
     private TaskAdapterListener listener ;
     private Context context;
@@ -31,57 +31,84 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
     }
 
 
+    @Override
+    public int getItemViewType(int position) {
+        if(mTask.get(position).getImage() == null){
+            return 0;
+        }
+        return 1;
+    }
+
     @NonNull
     @Override
-    public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.specificview,parent,false);
-        return new TaskHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if(viewType == 0){
+            //Without image
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.withoutimage,parent,false);
+            return new TaskHolderWithoutImage(view);
+        }
+
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.specificview, parent, false);
+            return new TaskHolder(view);
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final Task mBindTask = mTask.get(position);
-        holder.spectitle.setText(mBindTask.getTitle());
-        if(mBindTask.getDate() != null){
-            holder.dateStr.setText(mBindTask.getDate());
-        }
+        //Without image
+        if(mBindTask.getImage() == null){
 
-
-        holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!mBindTask.isDone()){
-                    mBindTask.setDone(true);
-                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
-                } else{
-                    mBindTask.setDone(false);
-                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
-                }
+            TaskHolderWithoutImage taskHolder = (TaskHolderWithoutImage) holder;
+            taskHolder.spectitle.setText(mBindTask.getTitle());
+            if(mBindTask.getDate() != null){
+                taskHolder.dateStr.setText(mBindTask.getDate());
             }
-        });
 
-       /* if (holder.box.isChecked()) {
-            mBindTask.setChecked(true);
+            taskHolder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(!mBindTask.isDone()){
+                        mBindTask.setDone(true);
+                        TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                    } else{
+                        mBindTask.setDone(false);
+                        TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                    }
+                }
+            });
 
-        } else{
-            mBindTask.setChecked(false);
 
-        }
-        TaskLab.getsTaskLab(context)
-                .getTaskDao()
-                .update(mBindTask);*/
+        } else {
+        //With image
+            TaskHolder taskHolder = (TaskHolder) holder;
+            taskHolder.spectitle.setText(mBindTask.getTitle());
+            if(mBindTask.getDate() != null){
+                taskHolder.dateStr.setText(mBindTask.getDate());
+            }
 
+            taskHolder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(!mBindTask.isDone()){
+                        mBindTask.setDone(true);
+                        TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                    } else{
+                        mBindTask.setDone(false);
+                        TaskLab.getsTaskLab(context).updateTask(mBindTask);
+                    }
+                }
+            });
 
-        if(mBindTask.getImage() != null){
 
             Glide.with(context)
                     .asBitmap()
                     .circleCrop()
                     .load(Uri.parse(mBindTask.getImage()))
-                    .into(holder.imag);
+                    .into(taskHolder.imag);
+
         }
-
-
 
     }
 
@@ -127,6 +154,31 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder>  {
         }
 
 
+    }
+
+    public class TaskHolderWithoutImage extends RecyclerView.ViewHolder{
+        CardView cardView ;
+        TextView spectitle ,dateStr;
+        ImageView imageView;
+        CheckBox box;
+        public TaskHolderWithoutImage(@NonNull View itemview) {
+            super(itemview);
+            cardView = itemview.findViewById(R.id.cardw);
+            spectitle = itemview.findViewById(R.id.realtitlew);
+            dateStr = itemview.findViewById(R.id.date_strw);
+            box = itemview.findViewById(R.id.checkBoxw);
+            imageView = itemview.findViewById(R.id.imageVieww);
+
+            imageView.setOnClickListener(view -> {
+                if(listener != null){
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        listener.onClickdelete(position);
+                    }
+                }
+            });
+
+        }
     }
 
 
