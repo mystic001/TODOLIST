@@ -46,8 +46,6 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
-
-
         mTitleField = findViewById(R.id.title);
         imageView = findViewById(R.id.imgView);
         setTime = findViewById(R.id.timeseter);
