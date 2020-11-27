@@ -6,11 +6,10 @@ import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
+
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;

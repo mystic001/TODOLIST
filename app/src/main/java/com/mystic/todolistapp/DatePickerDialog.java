@@ -15,7 +15,6 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 public class DatePickerDialog extends DialogFragment {
-    private View view;
     private DatePicker mDatePicker;
     private DateListesener listesener ;
 
@@ -32,7 +31,7 @@ public class DatePickerDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
         mDatePicker = view.findViewById(R.id.date_picker);
         mDatePicker.setMinDate(System.currentTimeMillis() - 1000);//This prevents the selection of dates in the past;
         return new AlertDialog.Builder(getActivity())

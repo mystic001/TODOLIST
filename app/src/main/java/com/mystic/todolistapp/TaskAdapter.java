@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,20 +65,16 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                 taskHolder.dateStr.setText(mBindTask.getDate());
             }
 
-            taskHolder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if(mBindTask.getDone() == 0){
-                        mBindTask.setDone(1);
-                        taskHolder.box.setChecked(true);
-                        taskHolder.box.isChecked();
-                    } else{
-                        mBindTask.setDone(0);
-                        taskHolder.box.setChecked(false);
-                        taskHolder.box.isChecked();
-                    }
-                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
+            taskHolder.box.setOnCheckedChangeListener((compoundButton, b) -> {
+                if(mBindTask.getDone() == 0){
+                    mBindTask.setDone(1);
+                    taskHolder.box.setChecked(true);
+                } else{
+                    mBindTask.setDone(0);
+                    taskHolder.box.setChecked(false);
                 }
+                taskHolder.box.isChecked();
+                TaskLab.getsTaskLab(context).updateTask(mBindTask);
             });
 
 
@@ -91,20 +86,16 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                 taskHolder.dateStr.setText(mBindTask.getDate());
             }
 
-            taskHolder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if(mBindTask.getDone() == 0){
-                        mBindTask.setDone(1);
-                        taskHolder.box.setChecked(true);
-                        taskHolder.box.isChecked();
-                    } else{
-                        mBindTask.setDone(0);
-                        taskHolder.box.setChecked(false);
-                        taskHolder.box.isChecked();
-                    }
-                    TaskLab.getsTaskLab(context).updateTask(mBindTask);
+            taskHolder.box.setOnCheckedChangeListener((compoundButton, b) -> {
+                if(mBindTask.getDone() == 0){
+                    mBindTask.setDone(1);
+                    taskHolder.box.setChecked(true);
+                } else{
+                    mBindTask.setDone(0);
+                    taskHolder.box.setChecked(false);
                 }
+                taskHolder.box.isChecked();
+                TaskLab.getsTaskLab(context).updateTask(mBindTask);
             });
 
 
