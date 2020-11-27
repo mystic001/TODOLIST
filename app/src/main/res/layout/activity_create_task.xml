@@ -7,20 +7,6 @@
     android:padding="10dp"
     tools:context=".CreateTaskActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="0dp"
@@ -69,8 +55,8 @@
 
     <ImageView
         android:id="@+id/imgView"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:layout_marginTop="12dp"
         android:contentDescription="@string/todo"
         app:layout_constraintEnd_toEndOf="parent"
